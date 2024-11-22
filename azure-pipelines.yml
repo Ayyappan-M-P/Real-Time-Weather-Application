@@ -4,14 +4,19 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  System.Debug: true
+
 steps:
+- checkout: self  # Checkout the repository
+
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: '$(build.sourcesDirectory)'
+    rootFolderOrFile: '$(Build.SourcesDirectory)'  # Path to the files to archive
     includeRootFolder: false
 
 - task: PublishBuildArtifacts@1
   inputs:
-    pathToPublish: $(Build.ArtifactStagingDirectory)
-    artifactName: drop
-    publishLocation: 'Container'
+    pathToPublish: $(Build.ArtifactStagingDirectory)  # Path where the artifacts are staged
+    artifactName: drop  # Name of the artifact
+    publishLocation: 'Container'  # Publish to Azure Pipelines artifact container
